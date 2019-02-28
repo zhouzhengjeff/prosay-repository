@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/dataSources.local.xml
+.idea/workspace.xml
+oa-common/target/
+oa-dao/target/
+oa-domain/target/
+oa-service/target/
+oa-web/target/
