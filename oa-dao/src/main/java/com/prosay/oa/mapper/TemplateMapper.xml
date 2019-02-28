@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prosay.oa.mapper.TemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.prosay.oa.domain.Template" >
+    <id column="template_id" property="templateId" jdbcType="INTEGER" />
+    <result column="template_name" property="templateName" jdbcType="VARCHAR" />
+    <result column="process_definition_key" property="processDefinitionKey" jdbcType="VARCHAR" />
+    <result column="template_document_path" property="templateDocumentPath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    template_id, template_name, process_definition_key, template_document_path
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.prosay.oa.domain.TemplateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oa_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oa_template
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oa_template
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.prosay.oa.domain.TemplateExample" >
+    delete from oa_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.prosay.oa.domain.Template" >
+    insert into oa_template (template_id, template_name, process_definition_key, 
+      template_document_path)
+    values (#{templateId,jdbcType=INTEGER}, #{templateName,jdbcType=VARCHAR}, #{processDefinitionKey,jdbcType=VARCHAR}, 
+      #{templateDocumentPath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prosay.oa.domain.Template" >
+    insert into oa_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="templateId != null" >
+        template_id,
+      </if>
+      <if test="templateName != null" >
+        template_name,
+      </if>
+      <if test="processDefinitionKey != null" >
+        process_definition_key,
+      </if>
+      <if test="templateDocumentPath != null" >
+        template_document_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="templateId != null" >
+        #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="templateName != null" >
+        #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="processDefinitionKey != null" >
+        #{processDefinitionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="templateDocumentPath != null" >
+        #{templateDocumentPath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.prosay.oa.domain.TemplateExample" resultType="java.lang.Integer" >
+    select count(*) from oa_template
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update oa_template
+    <set >
+      <if test="record.templateId != null" >
+        template_id = #{record.templateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateName != null" >
+        template_name = #{record.templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processDefinitionKey != null" >
+        process_definition_key = #{record.processDefinitionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templateDocumentPath != null" >
+        template_document_path = #{record.templateDocumentPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update oa_template
+    set template_id = #{record.templateId,jdbcType=INTEGER},
+      template_name = #{record.templateName,jdbcType=VARCHAR},
+      process_definition_key = #{record.processDefinitionKey,jdbcType=VARCHAR},
+      template_document_path = #{record.templateDocumentPath,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prosay.oa.domain.Template" >
+    update oa_template
+    <set >
+      <if test="templateName != null" >
+        template_name = #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="processDefinitionKey != null" >
+        process_definition_key = #{processDefinitionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="templateDocumentPath != null" >
+        template_document_path = #{templateDocumentPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prosay.oa.domain.Template" >
+    update oa_template
+    set template_name = #{templateName,jdbcType=VARCHAR},
+      process_definition_key = #{processDefinitionKey,jdbcType=VARCHAR},
+      template_document_path = #{templateDocumentPath,jdbcType=VARCHAR}
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </update>
+</mapper>

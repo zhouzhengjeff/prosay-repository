@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+        <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+            <property name="securityManager" ref="securityManager"/>
+
+            <!--
+                1.没有认证，则请求交给loginUrl指向的请求做跳转
+                2.如果登录成功了,则shiro会自动跳转到上一次输入的url地址
+            -->
+            <property name="loginUrl" value="/user/login"/>
+
+            <property name="successUrl" value="/index/index"/>
+
+            <property name="unauthorizedUrl" value="/user/unauthorized"/>
+
+            <property name="filterChainDefinitions">
+                <value>
+                    <!--anon对应的过滤器是AnonymousFilter。意味着不要过滤（放行）-->
+                    /script/** = anon
+                    /style/** = anon
+
+                    /user/logout = logout
+
+                    <!--不推荐使用配置方式来实现授权-->
+                    <!--/user/add = roles[user]-->
+
+                    <!--/user/add = perms["user:add"]-->
+
+                    <!--对于任何资源都要经过认证过滤器（FormAuthenticationFilter）-->
+                    /** = authc
+                </value>
+            </property>
+
+            <property name="filters">
+                <map>
+                    <entry key="authc">
+                        <bean class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+                            <property name="usernameParam" value="loginName"/>
+                            <property name="passwordParam" value="userPassword"/>
+                        </bean>
+                    </entry>
+
+                    <entry key="logout">
+                        <bean class="org.apache.shiro.web.filter.authc.LogoutFilter">
+                            <property name="redirectUrl" value="/user/login"/>
+                        </bean>
+                    </entry>
+                </map>
+            </property>
+        </bean>
+
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="realm"/>
+        <!--<property name="cacheManager" ref="cacheManager"/>-->
+        <!--<property name="sessionManager" ref="sessionManager"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>-->
+    </bean>
+
+    <bean id="realm" class="com.prosay.oa.shiro.OaRealm">
+        <!--<property name="credentialsMatcher" ref="credentialsMatcher"/>-->
+    </bean>
+
+    <!--<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="1"/>
+    </bean>-->
+
+    <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>-->
+
+    <!--<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        &lt;!&ndash;全局的session生命周期（过期时间 毫秒为单位）&ndash;&gt;
+        <property name="globalSessionTimeout" value="600000"/>
+        &lt;!&ndash;session一旦过期应该删除掉&ndash;&gt;
+        <property name="deleteInvalidSessions" value="true"/>
+    </bean>-->
+
+    <!--<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="cookie"/>
+    </bean>
+
+    <bean id="cookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="maxAge" value=""></property>
+    </bean>-->
+</beans>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/oa-common/oa-common.iml" filepath="$PROJECT_DIR$/oa-common/oa-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oa-dao/oa-dao.iml" filepath="$PROJECT_DIR$/oa-dao/oa-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oa-domain/oa-domain.iml" filepath="$PROJECT_DIR$/oa-domain/oa-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oa-parent/oa-parent.iml" filepath="$PROJECT_DIR$/oa-parent/oa-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oa-service/oa-service.iml" filepath="$PROJECT_DIR$/oa-service/oa-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oa-web/oa-web.iml" filepath="$PROJECT_DIR$/oa-web/oa-web.iml" />
+    </modules>
+  </component>
+</project>

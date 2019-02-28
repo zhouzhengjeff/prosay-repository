@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prosay.oa.mapper.PrivilegeMapper" >
+  <resultMap id="BaseResultMap" type="com.prosay.oa.domain.Privilege" >
+    <id column="privilege_id" property="privilegeId" jdbcType="INTEGER" />
+    <result column="privilege_name" property="privilegeName" jdbcType="VARCHAR" />
+    <result column="privilege_url" property="privilegeUrl" jdbcType="VARCHAR" />
+    <result column="privilege_level" property="privilegeLevel" jdbcType="INTEGER" />
+    <result column="privilege_is_leaf" property="privilegeIsLeaf" jdbcType="VARCHAR" />
+    <result column="privilege_is_module" property="privilegeIsModule" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="privilege_code" property="privilegeCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    privilege_id, privilege_name, privilege_url, privilege_level, privilege_is_leaf, 
+    privilege_is_module, parent_id, privilege_code
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.prosay.oa.domain.PrivilegeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oa_privilege
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oa_privilege
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oa_privilege
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.prosay.oa.domain.PrivilegeExample" >
+    delete from oa_privilege
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.prosay.oa.domain.Privilege" >
+    insert into oa_privilege (privilege_id, privilege_name, privilege_url, 
+      privilege_level, privilege_is_leaf, privilege_is_module, 
+      parent_id, privilege_code)
+    values (#{privilegeId,jdbcType=INTEGER}, #{privilegeName,jdbcType=VARCHAR}, #{privilegeUrl,jdbcType=VARCHAR}, 
+      #{privilegeLevel,jdbcType=INTEGER}, #{privilegeIsLeaf,jdbcType=VARCHAR}, #{privilegeIsModule,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{privilegeCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.prosay.oa.domain.Privilege" >
+    insert into oa_privilege
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="privilegeId != null" >
+        privilege_id,
+      </if>
+      <if test="privilegeName != null" >
+        privilege_name,
+      </if>
+      <if test="privilegeUrl != null" >
+        privilege_url,
+      </if>
+      <if test="privilegeLevel != null" >
+        privilege_level,
+      </if>
+      <if test="privilegeIsLeaf != null" >
+        privilege_is_leaf,
+      </if>
+      <if test="privilegeIsModule != null" >
+        privilege_is_module,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="privilegeCode != null" >
+        privilege_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="privilegeId != null" >
+        #{privilegeId,jdbcType=INTEGER},
+      </if>
+      <if test="privilegeName != null" >
+        #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeUrl != null" >
+        #{privilegeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeLevel != null" >
+        #{privilegeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="privilegeIsLeaf != null" >
+        #{privilegeIsLeaf,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeIsModule != null" >
+        #{privilegeIsModule,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="privilegeCode != null" >
+        #{privilegeCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.prosay.oa.domain.PrivilegeExample" resultType="java.lang.Integer" >
+    select count(*) from oa_privilege
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update oa_privilege
+    <set >
+      <if test="record.privilegeId != null" >
+        privilege_id = #{record.privilegeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.privilegeName != null" >
+        privilege_name = #{record.privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeUrl != null" >
+        privilege_url = #{record.privilegeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeLevel != null" >
+        privilege_level = #{record.privilegeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.privilegeIsLeaf != null" >
+        privilege_is_leaf = #{record.privilegeIsLeaf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilegeIsModule != null" >
+        privilege_is_module = #{record.privilegeIsModule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.privilegeCode != null" >
+        privilege_code = #{record.privilegeCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update oa_privilege
+    set privilege_id = #{record.privilegeId,jdbcType=INTEGER},
+      privilege_name = #{record.privilegeName,jdbcType=VARCHAR},
+      privilege_url = #{record.privilegeUrl,jdbcType=VARCHAR},
+      privilege_level = #{record.privilegeLevel,jdbcType=INTEGER},
+      privilege_is_leaf = #{record.privilegeIsLeaf,jdbcType=VARCHAR},
+      privilege_is_module = #{record.privilegeIsModule,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      privilege_code = #{record.privilegeCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prosay.oa.domain.Privilege" >
+    update oa_privilege
+    <set >
+      <if test="privilegeName != null" >
+        privilege_name = #{privilegeName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeUrl != null" >
+        privilege_url = #{privilegeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeLevel != null" >
+        privilege_level = #{privilegeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="privilegeIsLeaf != null" >
+        privilege_is_leaf = #{privilegeIsLeaf,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeIsModule != null" >
+        privilege_is_module = #{privilegeIsModule,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="privilegeCode != null" >
+        privilege_code = #{privilegeCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prosay.oa.domain.Privilege" >
+    update oa_privilege
+    set privilege_name = #{privilegeName,jdbcType=VARCHAR},
+      privilege_url = #{privilegeUrl,jdbcType=VARCHAR},
+      privilege_level = #{privilegeLevel,jdbcType=INTEGER},
+      privilege_is_leaf = #{privilegeIsLeaf,jdbcType=VARCHAR},
+      privilege_is_module = #{privilegeIsModule,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      privilege_code = #{privilegeCode,jdbcType=VARCHAR}
+    where privilege_id = #{privilegeId,jdbcType=INTEGER}
+  </update>
+</mapper>

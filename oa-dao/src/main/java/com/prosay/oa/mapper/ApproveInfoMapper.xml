@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.prosay.oa.mapper.ApproveInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.prosay.oa.domain.ApproveInfo" >
+    <id column="approve_info_id" property="approveInfoId" jdbcType="INTEGER" />
+    <result column="approve_date" property="approveDate" jdbcType="TIMESTAMP" />
+    <result column="approve_status" property="approveStatus" jdbcType="VARCHAR" />
+    <result column="approve_comment" property="approveComment" jdbcType="VARCHAR" />
+    <result column="approver_id" property="approverId" jdbcType="INTEGER" />
+    <result column="application_id" property="applicationId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    approve_info_id, approve_date, approve_status, approve_comment, approver_id, application_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.prosay.oa.domain.ApproveInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from oa_approve_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oa_approve_info
+    where approve_info_id = #{approveInfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oa_approve_info
+    where approve_info_id = #{approveInfoId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.prosay.oa.domain.ApproveInfoExample" >
+    delete from oa_approve_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.prosay.oa.domain.ApproveInfo" >
+    insert into oa_approve_info (approve_info_id, approve_date, approve_status, 
+      approve_comment, approver_id, application_id
+      )
+    values (#{approveInfoId,jdbcType=INTEGER}, #{approveDate,jdbcType=TIMESTAMP}, #{approveStatus,jdbcType=VARCHAR}, 
+      #{approveComment,jdbcType=VARCHAR}, #{approverId,jdbcType=INTEGER}, #{applicationId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.prosay.oa.domain.ApproveInfo" >
+    insert into oa_approve_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="approveInfoId != null" >
+        approve_info_id,
+      </if>
+      <if test="approveDate != null" >
+        approve_date,
+      </if>
+      <if test="approveStatus != null" >
+        approve_status,
+      </if>
+      <if test="approveComment != null" >
+        approve_comment,
+      </if>
+      <if test="approverId != null" >
+        approver_id,
+      </if>
+      <if test="applicationId != null" >
+        application_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="approveInfoId != null" >
+        #{approveInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="approveDate != null" >
+        #{approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveStatus != null" >
+        #{approveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="approveComment != null" >
+        #{approveComment,jdbcType=VARCHAR},
+      </if>
+      <if test="approverId != null" >
+        #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="applicationId != null" >
+        #{applicationId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.prosay.oa.domain.ApproveInfoExample" resultType="java.lang.Integer" >
+    select count(*) from oa_approve_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update oa_approve_info
+    <set >
+      <if test="record.approveInfoId != null" >
+        approve_info_id = #{record.approveInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveDate != null" >
+        approve_date = #{record.approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.approveStatus != null" >
+        approve_status = #{record.approveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approveComment != null" >
+        approve_comment = #{record.approveComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approverId != null" >
+        approver_id = #{record.approverId,jdbcType=INTEGER},
+      </if>
+      <if test="record.applicationId != null" >
+        application_id = #{record.applicationId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update oa_approve_info
+    set approve_info_id = #{record.approveInfoId,jdbcType=INTEGER},
+      approve_date = #{record.approveDate,jdbcType=TIMESTAMP},
+      approve_status = #{record.approveStatus,jdbcType=VARCHAR},
+      approve_comment = #{record.approveComment,jdbcType=VARCHAR},
+      approver_id = #{record.approverId,jdbcType=INTEGER},
+      application_id = #{record.applicationId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.prosay.oa.domain.ApproveInfo" >
+    update oa_approve_info
+    <set >
+      <if test="approveDate != null" >
+        approve_date = #{approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveStatus != null" >
+        approve_status = #{approveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="approveComment != null" >
+        approve_comment = #{approveComment,jdbcType=VARCHAR},
+      </if>
+      <if test="approverId != null" >
+        approver_id = #{approverId,jdbcType=INTEGER},
+      </if>
+      <if test="applicationId != null" >
+        application_id = #{applicationId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where approve_info_id = #{approveInfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.prosay.oa.domain.ApproveInfo" >
+    update oa_approve_info
+    set approve_date = #{approveDate,jdbcType=TIMESTAMP},
+      approve_status = #{approveStatus,jdbcType=VARCHAR},
+      approve_comment = #{approveComment,jdbcType=VARCHAR},
+      approver_id = #{approverId,jdbcType=INTEGER},
+      application_id = #{applicationId,jdbcType=INTEGER}
+    where approve_info_id = #{approveInfoId,jdbcType=INTEGER}
+  </update>
+</mapper>
